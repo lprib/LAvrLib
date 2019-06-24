@@ -1,0 +1,61 @@
+TODO:
+each function has its own list of bytecode?
+//or make each program one big stream of bytecode
+
+stack frame:
+	[variable section]
+		16 bit variables stored here, references by index from [Variable section] pointer
+	[stack section]
+		push/pop from here when doing general math operations etc.
+
+planned instructions types:
+
+stack math operations that push result back on to stack
+	add [a b -> n]
+	sub [a b -> n]
+	mul [a b -> n]
+	div [a b -> n]
+	mod [a b -> n]
+	inc [a -> aa]
+	dec [a -> aa]
+	push value [-> n]
+
+move top of stack to a variable and vice versa
+	pushvar var_index [-> n]
+	storevar var_index [n ->]
+
+	storevarconst var_index value
+		store immediate value into var index
+
+pointer operations
+	pushvarref var_index [-> n]
+		puts reference to var on stack
+	storeref [ref value ->]
+		store value from stack into the value ponited to by ptr (also on stack)
+	deref [ref -> n]
+		gets the value stored in reference ref and pushes it to stack
+
+
+move top of stack to a global and vice versa
+	pushglobal global_index [-> i]
+	storeglobal global_index [i ->]
+
+array instructions
+	loadvaroffest var_index [offset -> n]
+	derefoffset [ref offset -> n]
+	storevaroffset var_index [offset value ->]
+	storerefoffset [ref offset value ->]
+
+control flow and calling other functions
+	jumpeq jump_instr_index [a b ->]
+		jumps to jump_instr_index instruction if a&b equal
+	jumpneq
+	jumpgt
+	jumplt...etc.
+	jump instr_index
+
+function stuff
+	call func_index
+	return
+	callexternal func_name
+		lookup func_name in global func lookup table
